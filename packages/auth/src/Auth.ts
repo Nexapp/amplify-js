@@ -1424,6 +1424,9 @@ export default class AuthClass {
 			this._oAuthHandler &&
 			this._storage.getItem('amplify-signin-with-hostedUI') === 'true';
 
+		const signOutUsingHostedUI =
+			isSignedInHostedUI && !opts.disableHostedUISignOut;
+
 		return new Promise((res, rej) => {
 			if (opts && opts.global) {
 				logger.debug('user global sign out', user);
@@ -1437,7 +1440,7 @@ export default class AuthClass {
 					user.globalSignOut({
 						onSuccess: data => {
 							logger.debug('global sign out success');
-							if (isSignedInHostedUI) {
+							if (signOutUsingHostedUI) {
 								return res(this._oAuthHandler.signOut());
 							} else {
 								return res();
@@ -1452,7 +1455,7 @@ export default class AuthClass {
 			} else {
 				logger.debug('user sign out', user);
 				user.signOut();
-				if (isSignedInHostedUI) {
+				if (signOutUsingHostedUI) {
 					return res(this._oAuthHandler.signOut());
 				} else {
 					return res();

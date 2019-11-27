@@ -163,6 +163,8 @@ export interface ConfirmSignUpOptions {
 
 export interface SignOutOpts {
 	global?: boolean;
+	// disables signout redirects for HostedUI sign out
+	disableHostedUISignOut?: boolean;
 }
 
 export interface CurrentUserOpts {
